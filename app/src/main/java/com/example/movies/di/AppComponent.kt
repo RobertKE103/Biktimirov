@@ -29,17 +29,9 @@ interface AppComponent {
 
         @BindsInstance
         fun context(context: Context): Builder
-
-        @BindsInstance
-        fun apiKey(@MoviesApiQualifier apiKey: String): Builder
-
         fun build(): AppComponent
     }
 
 
 }
 
-@Target(AnnotationTarget.VALUE_PARAMETER)
-@Retention(AnnotationRetention.SOURCE)
-@Qualifier
-annotation class MoviesApiQualifier

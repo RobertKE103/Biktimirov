@@ -18,7 +18,6 @@ class MoviesApp : Application() {
         super.onCreate()
 
         _appComponent = DaggerAppComponent.builder()
-            .apiKey(BuildConfig.MOVIES_API_KEY)
             .context(this)
             .build()
 

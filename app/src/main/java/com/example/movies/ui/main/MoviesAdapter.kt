@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movies.R
 import com.example.movies.databinding.ItemRvMoviesBinding
 import com.example.movies.domain.entity.popular.Film
@@ -15,8 +16,18 @@ class MoviesAdapter(context: Context): PagingDataAdapter<Film, MoviesViewHolder>
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
+    var onMoviesItemLongClickListener: ((Film) -> Unit)? = null
+    var onMoviesItemClickListener: ((Film) -> Unit)? = null
+
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            getItem(position)?.let { it1 -> onMoviesItemClickListener?.invoke(it1) }
+        }
+        holder.itemView.setOnLongClickListener {
+            getItem(position)?.let { it1 -> onMoviesItemLongClickListener?.invoke(it1) }
+            true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -33,10 +44,16 @@ class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
     fun bind(film: Film?){
         with(binding){
+            Glide.with(itemView.context)
+                .load(film?.posterUrlPreview)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(imgFilm)
 
+            nameFilm.text = film?.nameRu
+            genreFilm.text = film?.genres?.get(0)?.genre
         }
     }
-
 
 }
 

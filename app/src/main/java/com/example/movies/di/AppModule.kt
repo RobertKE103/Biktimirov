@@ -1,5 +1,6 @@
 package com.example.movies.di
 
+import com.example.movies.BuildConfig
 import com.example.movies.data.api.AuthInterceptor
 import com.example.movies.data.api.MoviesService
 import dagger.Module
@@ -23,9 +24,9 @@ object AppModule {
 
 
     @[Provides Singleton]
-    fun provideOkHttpClient(@MoviesApiQualifier apiKey: String): OkHttpClient =
+    fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient().newBuilder()
-            .addInterceptor(AuthInterceptor(apiKey))
+            .addInterceptor(AuthInterceptor(BuildConfig.MOVIES_API_KEY))
             .build()
 
     @[Provides Singleton]
