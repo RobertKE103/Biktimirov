@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.movies.ui.details.DetailsViewModel
 import com.example.movies.ui.main.MainViewModel
+import com.example.movies.ui.search.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -21,5 +22,9 @@ interface ViewModelModule {
     @Binds
     @[IntoMap ViewModelKey(DetailsViewModel::class)]
     fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(SearchViewModel::class)]
+    fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
 }

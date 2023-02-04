@@ -3,4 +3,5 @@
     <string name="popular_title">Популярные</string>
     <string name="str_country"><![CDATA[<b>Страны</b>: %s]]></string>
     <string name="str_genres"><![CDATA[<b>Жанры:</b> %s]]></string>
+    <string name="genre_and_data">%s (%s)</string>
 </resources>

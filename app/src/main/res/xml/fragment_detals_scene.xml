@@ -14,7 +14,8 @@
             motion:maxVelocity="30"
             motion:maxAcceleration="40"
             motion:touchAnchorId="@id/scrollable"
-            motion:touchAnchorSide="top"/>
+            motion:touchAnchorSide="middle"
+            />
 
     </Transition>
 
@@ -32,8 +33,19 @@
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            motion:layout_constraintBottom_toTopOf="@id/guideline"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible"/>
+
+
+        <Constraint
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
+
     </ConstraintSet>
 </MotionScene>

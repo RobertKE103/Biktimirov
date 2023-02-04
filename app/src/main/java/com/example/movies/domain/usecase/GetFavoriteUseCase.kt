@@ -1,14 +1,16 @@
 package com.example.movies.domain.usecase
 
-import androidx.paging.PagingSource
 import com.example.movies.domain.entity.popularAndSearch.Film
 import com.example.movies.domain.repository.MoviesRepository
 import javax.inject.Inject
 
-class GetListPopularMoviesUseCase @Inject constructor(
+class GetFavoriteUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
-    operator fun invoke(): PagingSource<Int, Film> {
-        return repository.getListPopularMovies()
+
+    suspend operator fun invoke(): List<Film> {
+        return repository.getFavoriteMovies()
     }
+
+
 }

@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movies.R
 import com.example.movies.databinding.ItemRvMoviesBinding
-import com.example.movies.domain.entity.popular.Film
+import com.example.movies.domain.entity.popularAndSearch.Film
 
-class MoviesAdapter(context: Context): PagingDataAdapter<Film, MoviesViewHolder>(FilmDiffItemCallback) {
+class MoviesAdapter(context: Context) :
+    PagingDataAdapter<Film, MoviesViewHolder>(FilmDiffItemCallback) {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -36,14 +37,12 @@ class MoviesAdapter(context: Context): PagingDataAdapter<Film, MoviesViewHolder>
 }
 
 
-
-
-class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = ItemRvMoviesBinding.bind(itemView)
 
-    fun bind(film: Film?){
-        with(binding){
+    fun bind(film: Film?) {
+        with(binding) {
             Glide.with(itemView.context)
                 .load(film?.posterUrlPreview)
                 .centerCrop()
@@ -51,7 +50,10 @@ class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
                 .into(imgFilm)
 
             nameFilm.text = film?.nameRu
-            genreFilm.text = film?.genres?.get(0)?.genre
+            genreFilm.text = String.format(
+                itemView.context.getString(R.string.genre_and_data),
+                film?.genres?.get(0)?.genre, film?.year
+            )
         }
     }
 

@@ -1,8 +1,12 @@
 package com.example.movies.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.movies.BuildConfig
 import com.example.movies.data.api.AuthInterceptor
 import com.example.movies.data.api.MoviesService
+import com.example.movies.data.database.AppDatabase
+import com.example.movies.data.database.FavoriteDao
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -33,16 +37,18 @@ object AppModule {
     fun provideMoviesService(retrofit: Retrofit): MoviesService =
         retrofit.create(MoviesService::class.java)
 
-//
-//    @[Provides Singleton]
-//    fun provideAppDatabase(context: Context): AppDatabase = Room.databaseBuilder(
-//        context = context,
-//        AppDatabase::class.java,
-//        "favorite_movies.db"
-//    ).build()
-//
-//    @Provides
-//    fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao = appDatabase.favoriteDao()
+
+    @[Provides Singleton]
+    fun provideAppDatabase(appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            "favorite_movies.db"
+        ).build()
+    }
+
+    @Provides
+    fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao = appDatabase.favoriteDao()
 
 }
 

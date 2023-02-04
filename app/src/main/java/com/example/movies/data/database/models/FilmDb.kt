@@ -1,19 +1,17 @@
 package com.example.movies.data.database.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity(tableName = "favorite_movies")
 data class FilmDb(
-    val countries: List<CountryDb>,
-    val filmId: Int,
-    val filmLength: String,
-    val genres: List<GenreDb>,
-    val nameEn: String,
-    val nameRu: String,
-    val posterUrl: String,
-    val posterUrlPreview: String,
-    val rating: String,
-    val ratingChange: Any,
-    val ratingVoteCount: Int,
-    val year: String
+    @Embedded val countries: List<CountryDb>,
+    @PrimaryKey @ColumnInfo(name = "id") var filmId: Int,
+    @Embedded val genres: List<GenreDb>,
+    @ColumnInfo(name = "normalNameMovie") val nameRu: String,
+    @ColumnInfo(name = "mainUrl") val posterUrl: String,
+    @ColumnInfo(name = "year") val year: String,
+    @ColumnInfo(name = "isFavorite") var isFavorite: Boolean = true
 )

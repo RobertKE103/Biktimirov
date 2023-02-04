@@ -2,13 +2,16 @@ package com.example.movies.data.api
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.movies.domain.entity.popular.Film
+import com.example.movies.domain.entity.popularAndSearch.Film
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import retrofit2.HttpException
 
 class MoviesApiPageSource @AssistedInject constructor(
-    private val moviesService: MoviesService
+    private val moviesService: MoviesService,
+    @Assisted("type") private val type: Int,
+    @Assisted("query") private val query: String
 ) : PagingSource<Int, Film>() {
     override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
@@ -20,7 +23,12 @@ class MoviesApiPageSource @AssistedInject constructor(
         val page = params.key ?: INITIAL_PAGE_NUMBER
         val pageSize = params.loadSize
         return try {
-            val response = moviesService.getListPopular()
+            val response = if (type == POPULAR_TYPE) {
+                moviesService.getListPopular()
+            } else {
+                moviesService.getFromSearchMovies(query)
+            }
+
             return if (response.isSuccessful) {
                 val films = checkNotNull(response.body()?.films)
                 val nextKey = if (films.size == pageSize) null else page + 1
@@ -36,12 +44,17 @@ class MoviesApiPageSource @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(): MoviesApiPageSource
+        fun create(
+            @Assisted("type") type: Int,
+            @Assisted("query") query: String? = null
+        ): MoviesApiPageSource
     }
 
     companion object {
 
         const val INITIAL_PAGE_NUMBER = 1
+        const val SEARCH_TYPE = 100
+        const val POPULAR_TYPE = 101
     }
 
 }

@@ -57,14 +57,6 @@ class MainFragment : Fragment() {
 
         setupRecyclerView()
 
-        adapter.addLoadStateListener {
-            with(binding) {
-                rvListMovies.isVisible = it.refresh != LoadState.Loading
-                progress.isVisible = it.refresh == LoadState.Loading
-            }
-        }
-
-
         viewModel.viewModelScope.launch {
             viewModel.popularMovies.collectLatest(adapter::submitData)
         }
@@ -75,6 +67,10 @@ class MainFragment : Fragment() {
                 .navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it.filmId))
         }
 
+
+        adapter.onMoviesItemLongClickListener = {
+            viewModel.addInFavoriteFilm(it)
+        }
 
 
     }
@@ -88,6 +84,11 @@ class MainFragment : Fragment() {
             )
 
             rvListMovies.adapter = adapter
+
+            adapter.addLoadStateListener {
+                rvListMovies.isVisible = it.refresh != LoadState.Loading
+                progress.isVisible = it.refresh == LoadState.Loading
+            }
         }
     }
 

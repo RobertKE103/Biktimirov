@@ -6,6 +6,7 @@ import com.example.movies.app.MoviesApp
 import com.example.movies.di.viewmodels.ViewModelModule
 import com.example.movies.ui.details.DetailsFragment
 import com.example.movies.ui.main.MainFragment
+import com.example.movies.ui.search.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Qualifier
@@ -24,6 +25,7 @@ interface AppComponent {
     fun inject(mainFragment: MainFragment): MainFragment
 
     fun inject(detailsFragment: DetailsFragment): DetailsFragment
+    fun inject(searchFragment: SearchFragment): SearchFragment
 
 
 

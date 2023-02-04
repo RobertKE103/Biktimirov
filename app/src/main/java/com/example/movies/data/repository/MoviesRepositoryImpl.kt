@@ -2,9 +2,14 @@ package com.example.movies.data.repository
 
 import androidx.paging.PagingSource
 import com.example.movies.data.api.MoviesApiPageSource
+import com.example.movies.data.api.MoviesApiPageSource.Companion.POPULAR_TYPE
+import com.example.movies.data.api.MoviesApiPageSource.Companion.SEARCH_TYPE
 import com.example.movies.data.api.MoviesService
-import com.example.movies.domain.entity.details.MainDetails
-import com.example.movies.domain.entity.popular.Film
+import com.example.movies.data.database.FavoriteDao
+import com.example.movies.data.mappers.toFilm
+import com.example.movies.data.mappers.toFilmDb
+import com.example.movies.domain.entity.details.DetailsResponse
+import com.example.movies.domain.entity.popularAndSearch.Film
 import com.example.movies.domain.repository.MoviesRepository
 import retrofit2.Response
 import javax.inject.Inject
@@ -13,18 +18,31 @@ import javax.inject.Inject
 class MoviesRepositoryImpl @Inject constructor(
     private val moviesService: MoviesService,
     private val moviesApiPageSource: MoviesApiPageSource.Factory,
+    private val favoriteDao: FavoriteDao
 ): MoviesRepository {
 
     override fun getListPopularMovies(): PagingSource<Int, Film> {
-        return moviesApiPageSource.create()
+        return moviesApiPageSource.create(POPULAR_TYPE)
     }
 
-    override suspend fun getDetailsMovies(id: Int): Response<MainDetails> {
+    override fun getListSearchMovies(query: String): PagingSource<Int, Film> {
+        return moviesApiPageSource.create(SEARCH_TYPE, query)
+    }
+
+    override suspend fun getDetailsMovies(id: Int): Response<DetailsResponse> {
         return moviesService.getDetails(id)
     }
 
-    override suspend fun addFavoriteMovies() {
-        TODO("Not yet implemented")
+    override suspend fun addFavoriteMovies(film: Film) {
+        favoriteDao.insertFilm(film.toFilmDb())
+    }
+
+    override suspend fun getFavoriteMovies(): List<Film> {
+        return favoriteDao.getAllNews().map { it.toFilm() }
+    }
+
+    override suspend fun deleteFavoriteFilm(id: Int) {
+        favoriteDao.deleteFilm(id)
     }
 
 

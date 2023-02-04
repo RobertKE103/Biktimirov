@@ -1,6 +1,6 @@
 package com.example.movies.domain.entity.details
 
-data class MainDetails(
+data class DetailsResponse(
     val completed: Boolean,
     val countries: List<Country>,
     val coverUrl: Any,
