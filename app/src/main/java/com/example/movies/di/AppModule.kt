@@ -33,6 +33,17 @@ object AppModule {
     fun provideMoviesService(retrofit: Retrofit): MoviesService =
         retrofit.create(MoviesService::class.java)
 
+//
+//    @[Provides Singleton]
+//    fun provideAppDatabase(context: Context): AppDatabase = Room.databaseBuilder(
+//        context = context,
+//        AppDatabase::class.java,
+//        "favorite_movies.db"
+//    ).build()
+//
+//    @Provides
+//    fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao = appDatabase.favoriteDao()
+
 }
 
 

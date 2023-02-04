@@ -1,0 +1,39 @@
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:dragScale="1"
+            motion:onTouchUp="autoComplete"
+            motion:maxVelocity="30"
+            motion:maxAcceleration="40"
+            motion:touchAnchorId="@id/scrollable"
+            motion:touchAnchorSide="top"/>
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/space"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            motion:layout_constraintTop_toTopOf="parent"/>
+
+        <Constraint
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toTopOf="@id/guideline"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
+    </ConstraintSet>
+</MotionScene>

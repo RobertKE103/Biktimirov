@@ -7,8 +7,6 @@ import dagger.Module
 
 @Module
 interface BindModule {
-
-
     @Binds
     fun bindMoviesRepository(moviesRepositoryImpl: MoviesRepositoryImpl): MoviesRepository
 

@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
     private val moviesService: MoviesService,
-    private val moviesApiPageSource: MoviesApiPageSource.Factory
+    private val moviesApiPageSource: MoviesApiPageSource.Factory,
 ): MoviesRepository {
 
     override fun getListPopularMovies(): PagingSource<Int, Film> {

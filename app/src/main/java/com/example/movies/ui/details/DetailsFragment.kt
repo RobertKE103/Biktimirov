@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.movies.R
 import com.example.movies.app.appComponent
 import com.example.movies.databinding.FragmentDetailsBinding
+import com.example.movies.databinding.FragmentDetalsBinding
 import com.example.movies.di.viewmodels.ViewModelFactory
 import com.example.movies.domain.entity.details.MainDetails
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class DetailsFragment : Fragment() {
 
     private val moviesId by navArgs<DetailsFragmentArgs>()
 
-    private var _binding: FragmentDetailsBinding? = null
+    private var _binding: FragmentDetalsBinding? = null
     private val binding get() = _binding!!
 
 
@@ -43,7 +44,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDetalsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -54,9 +55,9 @@ class DetailsFragment : Fragment() {
         viewModel.getMovie(moviesId.id)
         Log.d("testId", moviesId.id.toString())
 
-        binding.back.setOnClickListener {
-            findNavController().popBackStack()
-        }
+//        binding.back.setOnClickListener {
+//            findNavController().popBackStack()
+//        }
 
 
         viewModel.film.observe(viewLifecycleOwner){
@@ -83,16 +84,10 @@ class DetailsFragment : Fragment() {
             description.text = data?.description
 
 
-            genre.text = Html.fromHtml(String.format(getString(R.string.str_genres), data?.genres?.get(0)?.genre))
+            genre.text = Html.fromHtml(String.format(getString(R.string.str_genres), data?.genres?.joinToString(", ") {it.genre}))
 
-            country.text = Html.fromHtml(String.format(getString(R.string.str_country), data?.countries?.get(0)?.country))
+            country.text = Html.fromHtml(String.format(getString(R.string.str_country), data?.countries?.joinToString ( ", " ) {it.country}))
         }
-
-
-
-
-
-
 
     }
 
