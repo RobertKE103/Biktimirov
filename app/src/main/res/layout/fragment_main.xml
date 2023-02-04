@@ -9,12 +9,11 @@
     tools:context=".ui.main.MainFragment">
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/CustomTextView"
         android:id="@+id/popular_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
         android:text="@string/popular_title"
-        android:textColor="@color/black"
         android:textSize="25sp"
         android:layout_marginTop="25dp"
         android:layout_marginStart="16dp"

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.movies.ui.MainActivity
 import com.example.movies.app.MoviesApp
 import com.example.movies.di.viewmodels.ViewModelModule
+import com.example.movies.ui.details.DetailsFragment
 import com.example.movies.ui.main.MainFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -21,6 +22,8 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity): MainActivity
 
     fun inject(mainFragment: MainFragment): MainFragment
+
+    fun inject(detailsFragment: DetailsFragment): DetailsFragment
 
 
 

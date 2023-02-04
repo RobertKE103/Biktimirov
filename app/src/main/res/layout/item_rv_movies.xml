@@ -30,13 +30,14 @@
                 android:id="@+id/img_film"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/banner"
+                tools:src="@drawable/banner"
                 android:contentDescription="@string/app_name" />
 
         </com.google.android.material.card.MaterialCardView>
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/CustomTextView"
             android:id="@+id/name_film"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,8 +47,6 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:singleLine="true"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -57,13 +56,12 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/CustomTextView"
             android:id="@+id/genre_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/black"
             android:textSize="14sp"
-            android:fontFamily="@font/roboto_medium"
             android:alpha="0.6"
             app:layout_constraintTop_toBottomOf="@id/name_film"
             app:layout_constraintStart_toStartOf="@id/name_film"

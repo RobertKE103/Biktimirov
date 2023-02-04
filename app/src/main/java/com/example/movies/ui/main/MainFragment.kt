@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.movies.app.appComponent
 import com.example.movies.databinding.FragmentMainBinding
@@ -57,12 +58,11 @@ class MainFragment : Fragment() {
         setupRecyclerView()
 
         adapter.addLoadStateListener {
-                with(binding){
-                    rvListMovies.isVisible = it.refresh != LoadState.Loading
-                    progress.isVisible = it.refresh == LoadState.Loading
-                }
+            with(binding) {
+                rvListMovies.isVisible = it.refresh != LoadState.Loading
+                progress.isVisible = it.refresh == LoadState.Loading
+            }
         }
-
 
 
         viewModel.viewModelScope.launch {
@@ -70,11 +70,18 @@ class MainFragment : Fragment() {
         }
 
 
+        adapter.onMoviesItemClickListener = {
+            findNavController()
+                .navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it.filmId))
+        }
+
+
+
     }
 
 
-    private fun setupRecyclerView(){
-        with(binding){
+    private fun setupRecyclerView() {
+        with(binding) {
             rvListMovies.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = MoviesLoadStateAdapter(),
                 footer = MoviesLoadStateAdapter()
@@ -83,8 +90,6 @@ class MainFragment : Fragment() {
             rvListMovies.adapter = adapter
         }
     }
-
-
 
 
     override fun onDestroyView() {

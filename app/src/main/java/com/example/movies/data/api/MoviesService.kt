@@ -15,7 +15,7 @@ interface MoviesService {
         @Query("type") type: String = "TOP_100_POPULAR_FILMS"
     ): Response<ListMovies>
 
-    @GET("api/v2.2/films/top/{id}")
+    @GET("api/v2.2/films/{id}")
     suspend fun getDetails(
         @Path("id") id: Int
     ): Response<MainDetails>
