@@ -1,5 +1,6 @@
 package com.example.movies.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.movies.data.database.models.FilmDb
 
@@ -14,7 +15,7 @@ interface FavoriteDao {
     suspend fun deleteFilm(filmId: Int)
 
     @Query("SELECT * FROM favorite_movies")
-    suspend fun getAllNews(): List<FilmDb>
+    fun getAllNews(): LiveData<List<FilmDb>>
     @Query("SELECT EXISTS(SELECT id FROM favorite_movies WHERE id=:filmId)")
     suspend fun checkItemFavorite(filmId: Int): Int
 

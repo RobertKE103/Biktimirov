@@ -12,7 +12,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.paging.PagingData
+import com.bumptech.glide.load.engine.Engine.LoadStatus
 import com.example.movies.R
 import com.example.movies.app.appComponent
 import com.example.movies.databinding.FragmentSearchBinding
@@ -93,6 +95,7 @@ class SearchFragment : Fragment() {
             adapter.addLoadStateListener {
                 rvListMovies.isVisible = it.refresh != LoadState.Loading
                 progress.isVisible = it.refresh == LoadState.Loading
+
             }
 
         }

@@ -1,5 +1,6 @@
 package com.example.movies.domain.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import com.example.movies.domain.entity.details.DetailsResponse
 import com.example.movies.domain.entity.popularAndSearch.Film
@@ -11,7 +12,7 @@ interface MoviesRepository {
     fun getListSearchMovies(query: String): PagingSource<Int, Film>
     suspend fun getDetailsMovies(id: Int): Response<DetailsResponse>
     suspend fun addFavoriteMovies(film: Film)
-    suspend fun getFavoriteMovies(): List<Film>
+    fun getFavoriteMovies(): LiveData<List<Film>>
     suspend fun deleteFavoriteFilm(id: Int)
 
 

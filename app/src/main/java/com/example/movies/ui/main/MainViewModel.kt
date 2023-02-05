@@ -1,6 +1,7 @@
 package com.example.movies.ui.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.example.movies.domain.entity.popularAndSearch.Film
@@ -33,9 +34,7 @@ class MainViewModel @Inject constructor(
     fun setupVisibleET(isVisibility: Boolean){
         _isVisible.value = isVisibility
     }
-
-    private val _favoriteMovies = MutableStateFlow(emptyList<Film>())
-    val favoriteMovies = _favoriteMovies.asStateFlow()
+    val favoriteMovies = getFavoriteUseCase.get().invoke()
 
     private fun newPagingDataFlow(): Flow<PagingData<Film>> {
         return Pager(PagingConfig(5, enablePlaceholders = false)) {
@@ -60,11 +59,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getFavoriteFilmsFlow(){
-        val useCase = getFavoriteUseCase.get()
-        viewModelScope.launch {
-            _favoriteMovies.value = useCase.invoke()
-        }
-    }
+
 
 }

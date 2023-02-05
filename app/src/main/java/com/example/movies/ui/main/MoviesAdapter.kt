@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -61,13 +62,13 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 itemView.context.getString(R.string.genre_and_data),
                 film?.genres?.get(0)?.genre, film?.year
             )
-//
-//            if (film in listFavorite){
-//                isFavorite.visibility = View.VISIBLE
-//            }
-        }
 
-        Log.d("filListFavorite", "bind: $listFavorite")
+            isFavorite.visibility = if (film?.isFavorite == true) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        }
     }
 
 }

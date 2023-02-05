@@ -10,5 +10,5 @@ data class Film(
     val nameRu: String,
     val posterUrlPreview: String,
     val year: String,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = true
 )

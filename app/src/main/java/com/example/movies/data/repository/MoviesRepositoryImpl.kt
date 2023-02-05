@@ -1,5 +1,8 @@
 package com.example.movies.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.map
 import androidx.paging.PagingSource
 import com.example.movies.data.api.MoviesApiPageSource
 import com.example.movies.data.api.MoviesApiPageSource.Companion.POPULAR_TYPE
@@ -37,9 +40,13 @@ class MoviesRepositoryImpl @Inject constructor(
         favoriteDao.insertFilm(film.toFilmDb())
     }
 
-    override suspend fun getFavoriteMovies(): List<Film> {
-        return favoriteDao.getAllNews().map { it.toFilm() }
-    }
+    override fun getFavoriteMovies(): LiveData<List<Film>> =
+        MediatorLiveData<List<Film>>().apply {
+            addSource(favoriteDao.getAllNews()) { list ->
+                value = list.map { it.toFilm() }
+            }
+
+        }
 
     override suspend fun deleteFavoriteFilm(id: Int) {
         favoriteDao.deleteFilm(id)
