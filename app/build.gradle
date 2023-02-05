@@ -17,9 +17,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // my api d0c9ba12-77b3-42cd-9cdd-a0a1ea7ed74d
 
-
-        buildConfigField "String", "MOVIES_API_KEY", "\"d0c9ba12-77b3-42cd-9cdd-a0a1ea7ed74d\""
+        buildConfigField "String", "MOVIES_API_KEY", "\"e30ffed0-76ab-4dd6-b41f-4c9da2b2735b\""
+        // test api e30ffed0-76ab-4dd6-b41f-4c9da2b2735b,
     }
 
     buildTypes {
@@ -65,7 +66,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    // LiveData
+// LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
 
 // Retrofit
@@ -82,9 +83,9 @@ dependencies {
 // room
     var room_version = "2.5.0"
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor ("androidx.room:room-compiler:$room_version")
-    // To use Kotlin annotation processing tool (kapt)
-    // optional - Kotlin Extensions and Coroutines support for Room
+    kapt("androidx.room:room-compiler:$room_version")
+// To use Kotlin annotation processing tool (kapt)
+// optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
     implementation "com.mikepenz:fastadapter-extensions-binding:5.5.1"
     implementation "com.mikepenz:fastadapter-extensions-diff:5.5.1"
@@ -92,7 +93,6 @@ dependencies {
 // dagger 2
     implementation 'com.google.dagger:dagger:2.44.2'
     kapt 'com.google.dagger:dagger-compiler:2.44.2'
-    implementation 'javax.inject:javax.inject:1'
 
 
 // navigation

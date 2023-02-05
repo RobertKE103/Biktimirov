@@ -10,21 +10,20 @@ import com.example.movies.domain.entity.popularAndSearch.Film
 
 fun FilmDb.toFilm(): Film {
     return Film(
-        countries = countries.map { it.toCountry() },
         filmId = filmId,
-        genres = genres.map { it.toGenre() },
+        genres = listOf(Genre(genres)),
         nameRu = nameRu,
         posterUrlPreview = posterUrl,
-        year = year
+        year = year,
+        countries = listOf()
     )
 }
 
 
 fun Film.toFilmDb(): FilmDb {
     return FilmDb(
-        countries = countries.map { it.toCountryDb() },
         filmId = filmId,
-        genres = genres.map { it.toGenreDb() },
+        genres = genres[0].genre,
         nameRu = nameRu,
         posterUrl = posterUrlPreview,
         year = year

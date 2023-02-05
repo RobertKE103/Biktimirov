@@ -10,7 +10,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         style="@style/CustomTextView"
-        android:id="@+id/popular_title"
+        android:id="@+id/favorite_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/popular_title"
@@ -28,8 +28,8 @@
         android:src="@drawable/search_img"
         android:layout_marginEnd="23dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/popular_title"
-        app:layout_constraintBottom_toBottomOf="@id/popular_title"
+        app:layout_constraintTop_toTopOf="@id/favorite_title"
+        app:layout_constraintBottom_toBottomOf="@id/favorite_title"
         android:contentDescription="@string/popular_title" />
 
 
@@ -39,11 +39,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="21dp"
         android:paddingHorizontal="10dp"
-        android:layout_marginBottom="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/popular_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/popular_title"
+        app:layout_constraintTop_toBottomOf="@id/favorite_title"
         tools:listitem="@layout/item_rv_movies"/>
 
     <com.google.android.material.card.MaterialCardView
@@ -53,6 +52,7 @@
         android:layout_marginEnd="18dp"
         android:clickable="true"
         android:focusable="true"
+        app:cardCornerRadius="100dp"
         android:layout_marginStart="7dp"
         android:layout_marginBottom="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,6 +89,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginBottom="18dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent">

@@ -1,6 +1,7 @@
 package com.example.movies.ui.main
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class MoviesAdapter(context: Context) :
 
     fun favoriteList(divs: List<Film>) {
         listFavorite = divs
+        Log.d("filListFavorite", "fun: $listFavorite")
     }
 }
 
@@ -45,7 +47,6 @@ class MoviesAdapter(context: Context) :
 class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = ItemRvMoviesBinding.bind(itemView)
-
 
     fun bind(film: Film?, listFavorite: List<Film>) {
         with(binding) {
@@ -60,11 +61,13 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 itemView.context.getString(R.string.genre_and_data),
                 film?.genres?.get(0)?.genre, film?.year
             )
-
-            if (film in listFavorite){
-                isFavorite.visibility = View.VISIBLE
-            }
+//
+//            if (film in listFavorite){
+//                isFavorite.visibility = View.VISIBLE
+//            }
         }
+
+        Log.d("filListFavorite", "bind: $listFavorite")
     }
 
 }

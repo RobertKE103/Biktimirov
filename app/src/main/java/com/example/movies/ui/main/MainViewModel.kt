@@ -26,6 +26,14 @@ class MainViewModel @Inject constructor(
     val popularMovies: StateFlow<PagingData<Film>> = newPagingDataFlow()
         .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
+
+    private val _isVisible = MutableStateFlow(false)
+    val isVisible = _isVisible.asStateFlow()
+
+    fun setupVisibleET(isVisibility: Boolean){
+        _isVisible.value = isVisibility
+    }
+
     private val _favoriteMovies = MutableStateFlow(emptyList<Film>())
     val favoriteMovies = _favoriteMovies.asStateFlow()
 

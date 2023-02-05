@@ -2,9 +2,12 @@ package com.example.movies.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView.OnScrollListener
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.movies.R
 import com.example.movies.app.appComponent
 import com.example.movies.databinding.FragmentMainBinding
 import com.example.movies.di.viewmodels.ViewModelFactory
@@ -54,8 +60,6 @@ class MainFragment : Fragment() {
     }
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getFavoriteFilmsFlow()
@@ -65,12 +69,21 @@ class MainFragment : Fragment() {
             viewModel.popularMovies.collectLatest(adapter::submitData)
         }
 
-
-
-        viewLifecycleOwner.lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.favoriteMovies.collectLatest(adapter::favoriteList)
         }
 
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewModel.isVisible.collectLatest(this@MainFragment::setupVisibleButtons)
+        }
+
+        binding.favoriteButton.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_favoriteFragment)
+        }
+
+        binding.search.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
+        }
     }
 
 
@@ -98,8 +111,38 @@ class MainFragment : Fragment() {
 
             adapter.onMoviesItemLongClickListener = {
                 viewModel.addInFavoriteFilm(it)
+                Toast.makeText(requireContext(), it.nameRu, Toast.LENGTH_LONG).show()
             }
 
+
+
+            rvListMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+
+                    val manager = (recyclerView.layoutManager) as LinearLayoutManager
+
+                    if (dy > 10 || dy < -10) {
+                        viewModel.setupVisibleET(false)
+                    } else if (dy == 1 || dy == -1 || manager.findFirstVisibleItemPosition() == 0) {
+                        viewModel.setupVisibleET(true)
+                    }
+                }
+            })
+
+        }
+    }
+
+
+    private fun setupVisibleButtons(itVisible: Boolean) {
+        if (itVisible) {
+            binding.popularButton.visibility = View.VISIBLE
+            binding.favoriteButton.visibility = View.VISIBLE
+        } else {
+            binding.popularButton.visibility = View.INVISIBLE
+            binding.favoriteButton.visibility = View.INVISIBLE
         }
     }
 

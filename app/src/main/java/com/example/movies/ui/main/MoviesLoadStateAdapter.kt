@@ -33,7 +33,7 @@ class MoviesLoadStateAdapter : LoadStateAdapter<MoviesLoadStateAdapter.ItemViewH
     }
 
 
-    class ProgressViewHolder internal constructor(
+    class ProgressViewHolder(
         binding: ItemProgressBinding
     ) : ItemViewHolder(binding.root) {
 
@@ -59,7 +59,7 @@ class MoviesLoadStateAdapter : LoadStateAdapter<MoviesLoadStateAdapter.ItemViewH
         }
     }
 
-    class ErrorViewHolder internal constructor(
+    class ErrorViewHolder (
         private val binding: ItemErrorBinding
     ) : ItemViewHolder(binding.root) {
 

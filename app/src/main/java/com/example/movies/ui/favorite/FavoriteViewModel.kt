@@ -17,8 +17,7 @@ class FavoriteViewModel @Inject constructor(
     private val _favoriteFilms = MutableStateFlow(emptyList<Film>())
     val favoriteFilms = _favoriteFilms.asStateFlow()
 
-    init {
-
+    fun getFavoriteList(){
         viewModelScope.launch {
             _favoriteFilms.value = getFavoriteUseCase.invoke()
         }

@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorite_movies")
 data class FilmDb(
-    @Embedded val countries: List<CountryDb>,
     @PrimaryKey @ColumnInfo(name = "id") var filmId: Int,
-    @Embedded val genres: List<GenreDb>,
+    @ColumnInfo("genre") val genres: String,
     @ColumnInfo(name = "normalNameMovie") val nameRu: String,
     @ColumnInfo(name = "mainUrl") val posterUrl: String,
     @ColumnInfo(name = "year") val year: String,

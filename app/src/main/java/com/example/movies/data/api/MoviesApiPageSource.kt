@@ -46,7 +46,7 @@ class MoviesApiPageSource @AssistedInject constructor(
     interface Factory {
         fun create(
             @Assisted("type") type: Int,
-            @Assisted("query") query: String? = null
+            @Assisted("query") query: String? = ""
         ): MoviesApiPageSource
     }
 

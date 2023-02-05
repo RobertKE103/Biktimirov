@@ -6,6 +6,7 @@ import com.example.movies.ui.MainActivity
 import com.example.movies.app.MoviesApp
 import com.example.movies.di.viewmodels.ViewModelModule
 import com.example.movies.ui.details.DetailsFragment
+import com.example.movies.ui.favorite.FavoriteFragment
 import com.example.movies.ui.main.MainFragment
 import com.example.movies.ui.search.SearchFragment
 import dagger.BindsInstance
@@ -22,9 +23,9 @@ interface AppComponent {
     fun inject(moviesApp: MoviesApp): MoviesApp
     fun inject(mainActivity: MainActivity): MainActivity
     fun inject(mainFragment: MainFragment): MainFragment
-
     fun inject(detailsFragment: DetailsFragment): DetailsFragment
     fun inject(searchFragment: SearchFragment): SearchFragment
+    fun inject(favoriteFragment: FavoriteFragment): FavoriteFragment
 
 
 
