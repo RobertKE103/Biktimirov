@@ -1,14 +1,10 @@
 package com.example.movies.ui.main
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.example.movies.domain.entity.popularAndSearch.Film
-import com.example.movies.domain.usecase.AddFavoriteUseCase
-import com.example.movies.domain.usecase.DeleteFavoriteUseCase
-import com.example.movies.domain.usecase.GetFavoriteUseCase
-import com.example.movies.domain.usecase.GetListPopularMoviesUseCase
+import com.example.movies.domain.usecase.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,9 +12,10 @@ import javax.inject.Provider
 
 class MainViewModel @Inject constructor(
     private val getListPopularMoviesUseCase: Provider<GetListPopularMoviesUseCase>,
-    private val getFavoriteUseCase: Provider<GetFavoriteUseCase>,
+    getFavoriteUseCase: Provider<GetFavoriteUseCase>,
     private val addFavoriteUseCase: Provider<AddFavoriteUseCase>,
     private val deleteFavoriteUseCase: Provider<DeleteFavoriteUseCase>,
+    checkNetworkUseCase: Provider<CheckNetworkUseCase>,
 ) : ViewModel() {
 
 
@@ -27,13 +24,15 @@ class MainViewModel @Inject constructor(
     val popularMovies: StateFlow<PagingData<Film>> = newPagingDataFlow()
         .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
+    val networkStatus = checkNetworkUseCase.get().invoke().stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private val _isVisible = MutableStateFlow(false)
     val isVisible = _isVisible.asStateFlow()
 
-    fun setupVisibleET(isVisibility: Boolean){
+    fun setupVisibleET(isVisibility: Boolean) {
         _isVisible.value = isVisibility
     }
+
     val favoriteMovies = getFavoriteUseCase.get().invoke()
 
     private fun newPagingDataFlow(): Flow<PagingData<Film>> {
@@ -45,20 +44,16 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun addInFavoriteFilm(film: Film){
+    fun setupFavoriteFilm(film: Film) {
         val useCase = addFavoriteUseCase.get()
         viewModelScope.launch {
-            useCase(film)
+            if (film.isFavorite) {
+                deleteFavoriteUseCase.get()(film.filmId)
+            }else{
+                useCase(film)
+            }
         }
     }
-
-    fun deleteInFavoriteFilm(id: Int){
-        val useCase = deleteFavoriteUseCase.get()
-        viewModelScope.launch {
-            useCase(id)
-        }
-    }
-
 
 
 }

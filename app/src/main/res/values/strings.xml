@@ -7,4 +7,6 @@
     <string name="search_hint">Поиск</string>
     <string name="not_found">Не найдено</string>
     <string name="favorite">Избранное</string>
+    <string name="replace">Повторить</string>
+    <string name="error_network">Произошла ошибка при загрузке данных, проверьте подключение к сети</string>
 </resources>

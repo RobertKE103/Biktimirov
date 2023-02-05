@@ -2,17 +2,13 @@ package com.example.movies.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView.OnScrollListener
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,9 +23,11 @@ import javax.inject.Inject
 
 class MainFragment : Fragment() {
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var rvDecoration: SpaceItemDecoration
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -72,7 +70,7 @@ class MainFragment : Fragment() {
             viewModel.favoriteMovies.observe(viewLifecycleOwner, adapter::favoriteList)
         }
 
-        viewLifecycleOwner.lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isVisible.collectLatest(this@MainFragment::setupVisibleButtons)
         }
 
@@ -82,6 +80,10 @@ class MainFragment : Fragment() {
 
         binding.search.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
+        }
+
+        binding.replaceButtlon.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
         }
     }
 
@@ -94,6 +96,7 @@ class MainFragment : Fragment() {
             )
 
             rvListMovies.adapter = adapter
+            rvListMovies.addItemDecoration(rvDecoration)
 
 
             adapter.addLoadStateListener {
@@ -108,9 +111,10 @@ class MainFragment : Fragment() {
             }
 
 
-            adapter.onMoviesItemLongClickListener = {
-                viewModel.addInFavoriteFilm(it)
-                Toast.makeText(requireContext(), it.nameRu, Toast.LENGTH_LONG).show()
+            adapter.onMoviesItemLongClickListener = { film, position ->
+                film.isFavorite = !film.isFavorite
+                viewModel.setupFavoriteFilm(film)
+                adapter.notifyItemChanged(position)
             }
 
 
@@ -132,7 +136,6 @@ class MainFragment : Fragment() {
 
         }
     }
-
 
     private fun setupVisibleButtons(itVisible: Boolean) {
         if (itVisible) {

@@ -1,14 +1,13 @@
 package com.example.movies.ui.details
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -52,7 +51,6 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getMovie(moviesId.id)
-        Log.d("testId", moviesId.id.toString())
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
@@ -60,8 +58,7 @@ class DetailsFragment : Fragment() {
 
 
         viewModel.film.observe(viewLifecycleOwner){
-            val data = it?.body()
-            setupView(data)
+            setupView(it?.body())
         }
 
 

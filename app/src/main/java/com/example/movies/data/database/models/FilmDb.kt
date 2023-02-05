@@ -1,7 +1,6 @@
 package com.example.movies.data.database.models
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,5 +11,5 @@ data class FilmDb(
     @ColumnInfo(name = "normalNameMovie") val nameRu: String,
     @ColumnInfo(name = "mainUrl") val posterUrl: String,
     @ColumnInfo(name = "year") val year: String,
-    @ColumnInfo(name = "isFavorite") var isFavorite: Boolean = true
+    @ColumnInfo(name = "isFavorite") var isFavorite: Boolean = false
 )

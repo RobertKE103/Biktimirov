@@ -17,10 +17,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // my api d0c9ba12-77b3-42cd-9cdd-a0a1ea7ed74d
 
         buildConfigField "String", "MOVIES_API_KEY", "\"e30ffed0-76ab-4dd6-b41f-4c9da2b2735b\""
-        // test api e30ffed0-76ab-4dd6-b41f-4c9da2b2735b,
     }
 
     buildTypes {

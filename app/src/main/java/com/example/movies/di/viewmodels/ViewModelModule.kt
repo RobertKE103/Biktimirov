@@ -2,6 +2,7 @@ package com.example.movies.di.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.movies.ui.ActivityViewModel
 import com.example.movies.ui.details.DetailsViewModel
 import com.example.movies.ui.favorite.FavoriteViewModel
 import com.example.movies.ui.main.MainViewModel
@@ -31,6 +32,11 @@ interface ViewModelModule {
     @Binds
     @[IntoMap ViewModelKey(FavoriteViewModel::class)]
     fun bindFavoriteViewModel(viewModel: FavoriteViewModel): ViewModel
+
+
+    @Binds
+    @[IntoMap ViewModelKey(ActivityViewModel::class)]
+    fun bindActivityViewModel(viewModel: ActivityViewModel): ViewModel
 
 
 

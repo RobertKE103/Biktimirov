@@ -4,9 +4,10 @@ import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class SpaceItemDecoration: RecyclerView.ItemDecoration() {
+class SpaceItemDecoration @Inject constructor(): RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
         outRect: Rect,
