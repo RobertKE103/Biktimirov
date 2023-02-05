@@ -85,10 +85,13 @@ class DetailsFragment : Fragment() {
 
             genre.text = Html.fromHtml(
                 String.format(getString(R.string.str_genres),
-                data?.genres?.joinToString(", ") {it.genre}), Html.FROM_HTML_MODE_COMPACT
+                data?.genres?.joinToString(", ") {it.genre})
             )
 
-            country.text = Html.fromHtml(String.format(getString(R.string.str_country), data?.countries?.joinToString ( ", " ) {it.country}))
+            country.text = Html.fromHtml(
+                String.format(getString(R.string.str_country),
+                    data?.countries?.joinToString ( ", " ) {it.country})
+            )
         }
 
     }

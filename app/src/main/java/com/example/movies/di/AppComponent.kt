@@ -1,5 +1,6 @@
 package com.example.movies.di
 
+import android.app.Application
 import android.content.Context
 import com.example.movies.ui.MainActivity
 import com.example.movies.app.MoviesApp
@@ -15,13 +16,11 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [AppModule::class, BindModule::class, ViewModelModule::class])
+@Component(modules = [BindModule::class, ViewModelModule::class, RoomModule::class, RetrofitModule::class])
 interface AppComponent {
 
     fun inject(moviesApp: MoviesApp): MoviesApp
-
     fun inject(mainActivity: MainActivity): MainActivity
-
     fun inject(mainFragment: MainFragment): MainFragment
 
     fun inject(detailsFragment: DetailsFragment): DetailsFragment

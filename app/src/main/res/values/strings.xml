@@ -4,4 +4,7 @@
     <string name="str_country"><![CDATA[<b>Страны</b>: %s]]></string>
     <string name="str_genres"><![CDATA[<b>Жанры:</b> %s]]></string>
     <string name="genre_and_data">%s (%s)</string>
+    <string name="search_hint">Поиск</string>
+    <string name="not_found">Не найдено</string>
+    <string name="favorite">Избранное</string>
 </resources>

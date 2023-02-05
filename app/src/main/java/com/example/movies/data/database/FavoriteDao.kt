@@ -15,8 +15,7 @@ interface FavoriteDao {
 
     @Query("SELECT * FROM favorite_movies")
     suspend fun getAllNews(): List<FilmDb>
-//
-//    @Query("SELECT EXISTS(SELECT id FROM favorite_movies WHERE id=:filmId)")
-//    suspend fun checkItemFavorite(filmId: Int): Int
+    @Query("SELECT EXISTS(SELECT id FROM favorite_movies WHERE id=:filmId)")
+    suspend fun checkItemFavorite(filmId: Int): Int
 
 }

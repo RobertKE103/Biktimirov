@@ -16,12 +16,13 @@ class MoviesAdapter(context: Context) :
     PagingDataAdapter<Film, MoviesViewHolder>(FilmDiffItemCallback) {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private var listFavorite = listOf<Film>()
 
     var onMoviesItemLongClickListener: ((Film) -> Unit)? = null
     var onMoviesItemClickListener: ((Film) -> Unit)? = null
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), listFavorite)
         holder.itemView.setOnClickListener {
             getItem(position)?.let { it1 -> onMoviesItemClickListener?.invoke(it1) }
         }
@@ -34,6 +35,10 @@ class MoviesAdapter(context: Context) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(layoutInflater.inflate(R.layout.item_rv_movies, parent, false))
     }
+
+    fun favoriteList(divs: List<Film>) {
+        listFavorite = divs
+    }
 }
 
 
@@ -41,7 +46,8 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = ItemRvMoviesBinding.bind(itemView)
 
-    fun bind(film: Film?) {
+
+    fun bind(film: Film?, listFavorite: List<Film>) {
         with(binding) {
             Glide.with(itemView.context)
                 .load(film?.posterUrlPreview)
@@ -54,6 +60,10 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 itemView.context.getString(R.string.genre_and_data),
                 film?.genres?.get(0)?.genre, film?.year
             )
+
+            if (film in listFavorite){
+                isFavorite.visibility = View.VISIBLE
+            }
         }
     }
 

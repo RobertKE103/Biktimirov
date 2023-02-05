@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -34,7 +35,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter by lazy(LazyThreadSafetyMode.NONE) {
+    private val adapter by lazy {
         MoviesAdapter(requireContext())
     }
 
@@ -52,26 +53,23 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.getFavoriteFilmsFlow()
         setupRecyclerView()
 
-        viewModel.viewModelScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.popularMovies.collectLatest(adapter::submitData)
         }
 
 
-        adapter.onMoviesItemClickListener = {
-            findNavController()
-                .navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it.filmId))
+
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewModel.favoriteMovies.collectLatest(adapter::favoriteList)
         }
-
-
-        adapter.onMoviesItemLongClickListener = {
-            viewModel.addInFavoriteFilm(it)
-        }
-
 
     }
 
@@ -85,10 +83,23 @@ class MainFragment : Fragment() {
 
             rvListMovies.adapter = adapter
 
+
             adapter.addLoadStateListener {
                 rvListMovies.isVisible = it.refresh != LoadState.Loading
                 progress.isVisible = it.refresh == LoadState.Loading
             }
+
+
+            adapter.onMoviesItemClickListener = {
+                findNavController()
+                    .navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it.filmId))
+            }
+
+
+            adapter.onMoviesItemLongClickListener = {
+                viewModel.addInFavoriteFilm(it)
+            }
+
         }
     }
 

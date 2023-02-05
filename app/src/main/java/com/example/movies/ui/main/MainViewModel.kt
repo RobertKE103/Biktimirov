@@ -52,7 +52,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun getFavoriteFilmsFlow(){
+    fun getFavoriteFilmsFlow(){
         val useCase = getFavoriteUseCase.get()
         viewModelScope.launch {
             _favoriteMovies.value = useCase.invoke()
